@@ -36,9 +36,9 @@ def main(page: ft.Page):
     lista_auto = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
     # Tutti i TextField per le info necessarie per aggiungere una nuova automobile (marca, modello, anno, contatore posti)
-    testo_marca = ft.TextField('Marca')
-    testo_modello = ft.TextField('Modello')
-    testo_anno = ft.TextField('Anno')
+    testo_marca = ft.TextField(label='Marca')
+    testo_modello = ft.TextField(label='Modello')
+    testo_anno = ft.TextField(label='Anno')
     testo_contatore = ft.TextField(value="0", text_align=ft.TextAlign.RIGHT, width=100)
 
     def bottone_minus(e):
@@ -75,9 +75,9 @@ def main(page: ft.Page):
     def clicca_bottone(e):
         marca = testo_marca.value
         modello = testo_modello.value
+        anno = int(testo_anno.value)
+        num_posti = int(testo_contatore.value)
         try:
-            anno = int(testo_anno.value)
-            num_posti = int(testo_contatore.value)
             if testo_marca.value.isdigit() or testo_modello.value.isdigit():
                 alert.show_alert("Marca e modello devono contenere testo, non numeri.")
                 return
@@ -91,15 +91,11 @@ def main(page: ft.Page):
         except ValueError:
             alert.show_alert("Anno e numero di posti devono essere numerici.")
 
-        autonoleggio.aggiungi_automobile(marca, modello, anno, num_posti)
-        aggiorna_lista_auto()
-
         testo_marca.value = ''
         testo_modello.value = ''
         testo_anno.value = ''
 
         page.update()
-
     # TODO
 
     # --- EVENTI ---
