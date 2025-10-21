@@ -134,7 +134,7 @@ def main(page: ft.Page):
                         ft.IconButton(ft.Icons.REMOVE, on_click=bottone_minus, icon_color='red'), testo_contatore,
                         ft.IconButton(ft.Icons.ADD, on_click=bottone_plus, icon_color='green'),],
                alignment=ft.MainAxisAlignment.CENTER),
-        ft.Row(btnPress, alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row(controls=[btnPress], alignment=ft.MainAxisAlignment.CENTER),
 
         # TODO
 
