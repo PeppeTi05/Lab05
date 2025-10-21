@@ -135,7 +135,6 @@ def main(page: ft.Page):
                         ft.IconButton(ft.Icons.ADD, on_click=bottone_plus, icon_color='green'),],
                alignment=ft.MainAxisAlignment.CENTER),
         ft.Row(controls=[btnPress], alignment=ft.MainAxisAlignment.CENTER),
-
         # TODO
 
         # Sezione 4
