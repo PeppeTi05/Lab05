@@ -36,7 +36,21 @@ def main(page: ft.Page):
     lista_auto = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
     # Tutti i TextField per le info necessarie per aggiungere una nuova automobile (marca, modello, anno, contatore posti)
+    testo_marca = ft.TextField('Marca')
+    testo_modello = ft.TextField('Modello')
+    testo_anno = ft.TextField('Anno')
+    testo_contatore = ft.TextField(value="0", text_align=ft.TextAlign.RIGHT, width=100)
+
+    def bottone_minus(e):
+        testo_contatore.value = str(int(testo_contatore.value) - 1)
+        page.update()
+
+    def bottone_plus(e):
+        testo_contatore.value = str(int(testo_contatore.value) + 1)
+        page.update()
+
     # TODO
+
 
     # --- FUNZIONI APP ---
     def aggiorna_lista_auto():
@@ -58,6 +72,34 @@ def main(page: ft.Page):
         page.update()
 
     # Handlers per la gestione dei bottoni utili all'inserimento di una nuova auto
+    def clicca_bottone(e):
+        marca = testo_marca.value
+        modello = testo_modello.value
+        try:
+            anno = int(testo_anno.value)
+            num_posti = int(testo_contatore.value)
+            if testo_marca.value.isdigit() or testo_modello.value.isdigit():
+                alert.show_alert("Marca e modello devono contenere testo, non numeri.")
+                return
+            autonoleggio.aggiungi_automobile(marca, modello, anno, num_posti)
+            aggiorna_lista_auto()
+            testo_marca.value = ""
+            testo_modello.value = ""
+            testo_anno.value = ""
+            testo_contatore.value = "0"
+            page.update()
+        except ValueError:
+            alert.show_alert("Anno e numero di posti devono essere numerici.")
+
+        autonoleggio.aggiungi_automobile(marca, modello, anno, num_posti)
+        aggiorna_lista_auto()
+
+        testo_marca.value = ''
+        testo_modello.value = ''
+        testo_anno.value = ''
+
+        page.update()
+
     # TODO
 
     # --- EVENTI ---
@@ -65,6 +107,8 @@ def main(page: ft.Page):
     pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
 
     # Bottoni per la gestione dell'inserimento di una nuova auto
+    btnPress = ft.ElevatedButton("Aggiungi automobile", on_click=clicca_bottone)
+    btnPress.color= 'blue'
     # TODO
 
     # --- LAYOUT ---
@@ -83,6 +127,15 @@ def main(page: ft.Page):
                alignment=ft.MainAxisAlignment.CENTER),
 
         # Sezione 3
+        ft.Divider(),
+        ft.Text("Aggiungi automobile", size=20),
+        ft.Row(spacing=20,
+               controls=[testo_marca, testo_modello, testo_anno,
+                        ft.IconButton(ft.Icons.REMOVE, on_click=bottone_minus, icon_color='red'), testo_contatore,
+                        ft.IconButton(ft.Icons.ADD, on_click=bottone_plus, icon_color='green'),],
+               alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row(btnPress, alignment=ft.MainAxisAlignment.CENTER),
+
         # TODO
 
         # Sezione 4
