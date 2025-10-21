@@ -48,7 +48,6 @@ def main(page: ft.Page):
     def bottone_plus(e):
         testo_contatore.value = str(int(testo_contatore.value) + 1)
         page.update()
-
     # TODO
 
 
@@ -73,16 +72,19 @@ def main(page: ft.Page):
 
     # Handlers per la gestione dei bottoni utili all'inserimento di una nuova auto
     def clicca_bottone(e):
-        marca = testo_marca.value
-        modello = testo_modello.value
-        anno = int(testo_anno.value)
-        num_posti = int(testo_contatore.value)
         try:
+            marca = testo_marca.value
+            modello = testo_modello.value
+            anno = int(testo_anno.value)
+            num_posti = int(testo_contatore.value)
             if testo_marca.value.isdigit() or testo_modello.value.isdigit():
                 alert.show_alert("Marca e modello devono contenere testo, non numeri.")
                 return
+            # Richiamo la funzione aggiungi_automobile() da autonoleggio.py
             autonoleggio.aggiungi_automobile(marca, modello, anno, num_posti)
+            # Aggiorno la lista aggiungendo anche la nuova automobile
             aggiorna_lista_auto()
+            # Dopo aver aggiunto l'auto, svuoto i campi di testo
             testo_marca.value = ""
             testo_modello.value = ""
             testo_anno.value = ""
@@ -90,11 +92,6 @@ def main(page: ft.Page):
             page.update()
         except ValueError:
             alert.show_alert("Anno e numero di posti devono essere numerici.")
-
-        testo_marca.value = ''
-        testo_modello.value = ''
-        testo_anno.value = ''
-
         page.update()
     # TODO
 
@@ -104,7 +101,7 @@ def main(page: ft.Page):
 
     # Bottoni per la gestione dell'inserimento di una nuova auto
     btnPress = ft.ElevatedButton("Aggiungi automobile", on_click=clicca_bottone)
-    btnPress.color= 'blue'
+    btnPress.color = 'blue'
     # TODO
 
     # --- LAYOUT ---
@@ -126,8 +123,8 @@ def main(page: ft.Page):
         ft.Divider(),
         ft.Text("Aggiungi automobile", size=20),
         ft.Row(spacing=20,
-               controls=[testo_marca, testo_modello, testo_anno,
-                        ft.IconButton(ft.Icons.REMOVE, on_click=bottone_minus, icon_color='red'), testo_contatore,
+               controls=[testo_marca, testo_modello, testo_anno, testo_contatore,
+                        ft.IconButton(ft.Icons.REMOVE, on_click=bottone_minus, icon_color='red'),
                         ft.IconButton(ft.Icons.ADD, on_click=bottone_plus, icon_color='green'),],
                alignment=ft.MainAxisAlignment.CENTER),
         ft.Row(controls=[btnPress], alignment=ft.MainAxisAlignment.CENTER),
