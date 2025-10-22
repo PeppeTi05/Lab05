@@ -77,19 +77,26 @@ def main(page: ft.Page):
             modello = testo_modello.value
             anno = int(testo_anno.value)
             num_posti = int(testo_contatore.value)
+
+            # Definisco i vari controlli da effettuare sui valori inseriti dall'utente
             if testo_marca.value.isdigit() or testo_modello.value.isdigit():
                 alert.show_alert("Marca e modello devono contenere testo, non numeri.")
                 return
+            if anno <= 0 or num_posti <= 0:
+                raise ValueError("Anno e numero di posti devono essere positivi.")
+
             # Richiamo la funzione aggiungi_automobile() da autonoleggio.py
             autonoleggio.aggiungi_automobile(marca, modello, anno, num_posti)
             # Aggiorno la lista aggiungendo anche la nuova automobile
             aggiorna_lista_auto()
+
             # Dopo aver aggiunto l'auto, svuoto i campi di testo
             testo_marca.value = ""
             testo_modello.value = ""
             testo_anno.value = ""
             testo_contatore.value = "0"
             page.update()
+
         except ValueError:
             alert.show_alert("Anno e numero di posti devono essere numerici.")
         page.update()
